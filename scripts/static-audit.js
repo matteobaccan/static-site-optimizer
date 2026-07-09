@@ -4,7 +4,7 @@ const path = require('node:path');
 const { discoverSites } = require('./lib/discover-sites');
 const { checkAndFixDocumentMeta } = require('./lib/document-checks');
 const { fixImgTags } = require('./lib/img-fixes');
-const { fixExternalLinks } = require('./lib/link-fixes');
+const { fixExternalLinks, fixContactLinks, checkOfficeDocuments } = require('./lib/link-fixes');
 const { generateRobotsTxt, generateSitemapXml } = require('./lib/scaffold-seo');
 const { generateReadme } = require('./lib/scaffold-readme');
 const { generateLlmsTxt } = require('./lib/scaffold-llms');
@@ -58,6 +58,13 @@ async function auditSite(siteDir, fix) {
   const linkResult = fixExternalLinks(html);
   html = linkResult.html;
   findings.push(...linkResult.findings.map((f) => ({ ...f, autoFixed: !!fix })));
+
+  const contactResult = fixContactLinks(html);
+  html = contactResult.html;
+  findings.push(...contactResult.findings.map((f) => ({ ...f, autoFixed: !!fix })));
+
+  const officeResult = checkOfficeDocuments(html);
+  findings.push(...officeResult.findings.map((f) => ({ ...f, autoFixed: false })));
 
   if (fix && html !== originalHtml) fs.writeFileSync(indexPath, html);
 
