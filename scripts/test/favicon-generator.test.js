@@ -10,7 +10,9 @@ test('generates a structurally valid single-image 32x32 32bpp ICO', () => {
   assert.strictEqual(buf.readUInt16LE(4), 1); // image count
   assert.strictEqual(buf.readUInt8(6), 32); // width
   assert.strictEqual(buf.readUInt8(7), 32); // height
-  assert.strictEqual(buf.readUInt16LE(14), 32); // bit count
+  assert.strictEqual(buf.readUInt16LE(12), 32); // bit count
+  assert.strictEqual(buf.readUInt32LE(18), 22); // image offset (6-byte ICONDIR + 16-byte ICONDIRENTRY)
+  assert.strictEqual(buf.readUInt32LE(22), 40); // BITMAPINFOHEADER biSize, must start exactly at imageOffset
   assert.strictEqual(buf.length, 4286);
 });
 

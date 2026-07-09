@@ -91,9 +91,9 @@ function generateFaviconIco(letter, bgColorHex, fgColorHex) {
   buf.writeUInt8(0, o); o += 1; // color count
   buf.writeUInt8(0, o); o += 1; // reserved
   buf.writeUInt16LE(1, o); o += 2; // planes
-  buf.writeUInt16LE(imageOffset, o); o += 2; // image offset
   buf.writeUInt16LE(32, o); o += 2; // bit count
   buf.writeUInt32LE(bmpSize, o); o += 4; // bytes in resource
+  buf.writeUInt32LE(imageOffset, o); o += 4; // image offset (4-byte field per ICO spec)
 
   buf.writeUInt32LE(headerSize, o); o += 4;
   buf.writeInt32LE(size, o); o += 4;
