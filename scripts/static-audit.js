@@ -46,18 +46,18 @@ async function auditSite(siteDir, fix) {
 
   const docResult = checkAndFixDocumentMeta(html);
   html = docResult.html;
-  findings.push(...docResult.findings);
+  findings.push(...docResult.findings.map((f) => ({ ...f, autoFixed: !!fix })));
 
   const imgResult = fixImgTags(html, (src) => {
     if (/^https?:\/\//i.test(src)) return null;
     return path.join(siteDir, src);
   });
   html = imgResult.html;
-  findings.push(...imgResult.findings);
+  findings.push(...imgResult.findings.map((f) => ({ ...f, autoFixed: !!fix })));
 
   const linkResult = fixExternalLinks(html);
   html = linkResult.html;
-  findings.push(...linkResult.findings);
+  findings.push(...linkResult.findings.map((f) => ({ ...f, autoFixed: !!fix })));
 
   if (fix && html !== originalHtml) fs.writeFileSync(indexPath, html);
 

@@ -37,8 +37,14 @@ test('reports findings without writing files, then applies fixes with --fix', ()
   assert.ok(reportOnly.findings.some((f) => f.code === 'missing-charset'));
   assert.ok(reportOnly.findings.some((f) => f.code === 'missing-favicon'));
   assert.ok(!fs.existsSync(path.join(dir, 'robots.txt')), 'report-only run must not write files');
+  // Regression guard: document/img/link findings must not claim autoFixed:true
+  // when nothing was actually written to disk (report-only mode).
+  assert.ok(
+    reportOnly.findings.every((f) => f.autoFixed === false),
+    'report-only run must report autoFixed:false for every finding',
+  );
 
-  execFileSync('node', [cliPath, dir, '--fix'], { encoding: 'utf8' });
+  const fixed = JSON.parse(execFileSync('node', [cliPath, dir, '--fix'], { encoding: 'utf8' }));
 
   assert.ok(fs.existsSync(path.join(dir, 'robots.txt')));
   assert.ok(fs.existsSync(path.join(dir, 'sitemap.xml')));
@@ -48,6 +54,10 @@ test('reports findings without writing files, then applies fixes with --fix', ()
   const fixedHtml = fs.readFileSync(path.join(dir, 'index.html'), 'utf8');
   assert.ok(fixedHtml.includes('charset="UTF-8"'));
   assert.ok(fixedHtml.includes('width="10"'));
+  // The same regression guard, inverted: once files are actually written,
+  // autoFixed must reflect that reality too.
+  assert.strictEqual(fixed.findings.find((f) => f.code === 'missing-charset').autoFixed, true);
+  assert.strictEqual(fixed.findings.find((f) => f.code === 'missing-img-dimensions').autoFixed, true);
 
   fs.rmSync(dir, { recursive: true, force: true });
 });
