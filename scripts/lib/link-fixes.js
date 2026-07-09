@@ -59,7 +59,7 @@ function fixContactLinks(html) {
   
   const emailRegex = /\b[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}\b/g;
   // This matches Italian mobile and landline numbers like: 335 527 8570, ++39 335 527 8570, 011 123 4567
-  const phoneRegex = /(?:(?:\+?\+?|00)39[\s.-]?)?[30]\d{2,3}[\s.-]?\d{3,4}[\s.-]?\d{3,4}\b/g;
+  const phoneRegex = /(?<!\d)(?:(?:\+?\+?|00)39[\s.-]?)?[30]\d{2,3}[\s.-]?\d{3,4}[\s.-]?\d{3,4}\b/g;
 
   for (let i = 0; i < tokens.length; i++) {
     const token = tokens[i];
