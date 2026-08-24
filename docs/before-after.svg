@@ -1,0 +1,43 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 695 434" width="695" height="434" role="img" aria-label="Before: index.html loads from four external origins. After: everything is served from the site's own assets folder.">
+  <style>
+    .card { fill: #0d1117; stroke: #30363d; }
+    text { font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, "DejaVu Sans Mono", monospace; font-size: 14px; white-space: pre; }
+    .title { fill: #58a6ff; font-size: 17px; font-weight: 700; }
+    .tag   { fill: #7d8590; font-size: 12.5px; }
+    .head  { fill: #c9d1d9; font-weight: 700; }
+    .dim   { fill: #8b949e; }
+    .ext   { fill: #f0883e; }
+    .loc   { fill: #3fb950; }
+    .warn  { fill: #d29922; }
+    .good  { fill: #3fb950; }
+    .foot  { fill: #6e7681; font-size: 12.5px; }
+  </style>
+  <rect class="card" x="0.5" y="0.5" width="694" height="433" rx="10"/>
+  <text class="title" x="28" y="34">static-site-optimizer</text>
+  <text class="tag" x="238.5" y="34">zero external references</text>
+  <text class="head" x="28" y="72.0">BEFORE</text>
+  <text class="head" x="415.3" y="72.0">AFTER</text>
+  <text class="head" x="28" y="93.0">------</text>
+  <text class="head" x="415.3" y="93.0">-----</text>
+  <text class="dim" x="28" y="135.0">index.html</text>
+  <text class="dim" x="415.3" y="135.0">index.html</text>
+  <text class="dim" x="28" y="156.0">   |</text>
+  <text class="dim" x="415.3" y="156.0">   |</text>
+  <text class="ext" x="28" y="177.0">   +--&gt; fonts.googleapis.com</text>
+  <text class="loc" x="415.3" y="177.0">   +--&gt; assets/css/</text>
+  <text class="ext" x="28" y="198.0">   +--&gt; fonts.gstatic.com</text>
+  <text class="loc" x="415.3" y="198.0">   +--&gt; assets/fonts/</text>
+  <text class="ext" x="28" y="219.0">   +--&gt; cdn.jsdelivr.net</text>
+  <text class="loc" x="415.3" y="219.0">   +--&gt; assets/js/</text>
+  <text class="warn" x="28" y="240.0">   +--&gt; googletagmanager.com *</text>
+  <text class="warn" x="415.3" y="240.0">   +--&gt; googletagmanager.com *</text>
+  <text class="dim" x="28" y="282.0">4 extra origins</text>
+  <text class="good" x="415.3" y="282.0">0 extra origins</text>
+  <text class="dim" x="28" y="303.0">4 x DNS + TCP + TLS</text>
+  <text class="good" x="415.3" y="303.0">1 connection, already open</text>
+  <text class="dim" x="28" y="324.0">4 IPs handed to third parties</text>
+  <text class="good" x="415.3" y="324.0">nothing leaves your server</text>
+  <text class="dim" x="28" y="345.0">no shared cache since 2020</text>
+  <text class="good" x="415.3" y="345.0">CSP: default-src 'self'</text>
+  <text class="foot" x="28" y="378.6">* trackers and third-party embeds are reported, never removed</text>
+</svg>

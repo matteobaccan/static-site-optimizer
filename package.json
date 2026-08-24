@@ -1,0 +1,15 @@
+{
+  "name": "static-site-optimizer",
+  "version": "1.0.0",
+  "description": "Claude Code skill that strips external dependencies from static sites by self-hosting them, plus mechanical performance/SEO/accessibility hygiene fixes",
+  "private": true,
+  "license": "MIT",
+  "engines": { "node": ">=20" },
+  "bin": { "static-site-optimizer": ".claude/skills/static-site-optimizer/scripts/optimize.js" },
+  "scripts": {
+    "test": "node --test \".claude/skills/static-site-optimizer/scripts/**/*.test.js\"",
+    "optimize": "node .claude/skills/static-site-optimizer/scripts/optimize.js",
+    "discover": "node .claude/skills/static-site-optimizer/scripts/optimize.js --discover"
+  },
+  "keywords": ["static-site", "self-hosting", "seo", "performance", "privacy", "gdpr", "claude-code-skill"]
+}
